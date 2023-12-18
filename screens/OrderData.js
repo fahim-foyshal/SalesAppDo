@@ -88,13 +88,13 @@ const OrderData = () => {
               {item.shop_address}
             </Text>
           </View>
-          <View className="m-2 relative top-3 rounded-md">
+          {/* <View className="m-2 relative top-3 rounded-md">
             <Image
               source={{ uri: item.picture }}
               style={{ width: 120, height: 120 }}
               className="rounded-md"
             />
-          </View>
+          </View> */}
         </View>
       ))}
     </ScrollView>

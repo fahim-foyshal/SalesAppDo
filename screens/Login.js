@@ -134,7 +134,7 @@ const Login = () => {
             });
           }
   
-          navigation.navigate('bottomtab', { screen: 'Home' });
+          navigation.navigate('Bottomtab', { screen: 'Home' });
         })
         .catch((error) => {
           console.error('API Request Error:', error);

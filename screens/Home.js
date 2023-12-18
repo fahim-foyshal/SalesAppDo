@@ -16,7 +16,7 @@ import { useRoute } from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import Dashboared from './Dashboared';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserData, fetchUserRouteListData } from '../action/UserDataAction';
+import { fetchProductGroupListData, fetchUserData, fetchUserRouteListData } from '../action/UserDataAction';
 import AddShop from './AddShop';
 import offlineOrder from '../reducers/OfflineOrder';
 import OrderData from './OrderData';
@@ -27,6 +27,10 @@ import MakeSo from './MakeSo';
 import SyncProductGroup from './SyncProductGroup';
 import SyncSubCategory from './SyncSubCategory';
 import syncItemList from './SyncItemList';
+import CustomDrawer from '../navigation/CustomDrawer';
+import { fetchshopdata } from '../action/SyncAction';
+import DoHoldList from './DoHoldList';
+import DoCheckedList from './DoCheckedList';
 
 
 
@@ -46,6 +50,7 @@ const Home = ({navigation}) => {
   dispatch(fetchUserData());
   dispatch(fetchUserRouteListData());
   dispatch(fetchCartData());
+  dispatch(fetchProductGroupListData());
   
 
  
@@ -64,7 +69,9 @@ const Home = ({navigation}) => {
           if (results.rows.length > 0) {
             // User is logged in, retrieve their data
           
-
+            const item = results.rows.item(0);
+       
+            dispatch(fetchshopdata(item.dealer_code));
          
             
           }
@@ -82,7 +89,10 @@ const Home = ({navigation}) => {
 
   return (
 
-    <Drawer.Navigator initialRouteName="Dashboared">
+    <Drawer.Navigator initialRouteName="Dashboared"
+    drawerContent={(props) => <CustomDrawer {...props} />}
+
+    >
       <Drawer.Screen name="Dashboared" component={Dashboared}   options={{ headerShown: false }} />
      
       
@@ -90,6 +100,8 @@ const Home = ({navigation}) => {
       <Drawer.Screen name="offlineorders" component={OrderData}   />
       <Drawer.Screen name="Homedashboard" component={HomeDashBoard}   />
       <Drawer.Screen name="CreateOrder" component={MakeSo}   />
+      <Drawer.Screen name="DoHold" component={DoHoldList}   />
+      <Drawer.Screen name="DoChecked" component={DoCheckedList}   />
       <Drawer.Screen name="Themes" component={ThemeSwitcher}   />
       <Drawer.Screen name="Category" component={SyncProductGroup}   />
       <Drawer.Screen name="SubCategory" component={SyncSubCategory}   />

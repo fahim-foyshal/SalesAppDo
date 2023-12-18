@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SQLite from 'react-native-sqlite-storage';
-import { FETCH_ROUTELIST_REQUEST, FETCH_USERDATA_REQUEST } from "./actionsType";
+import { FETCH_ROUTELIST_REQUEST, FETCH_USERDATA_REQUEST,FETCH_PRODUCT_CATEGORY_LIST } from "./actionsType";
 
 const db = SQLite.openDatabase({ name: 'mydatabase.db', location: 'default' });
 
@@ -11,6 +11,10 @@ export const fetchUserPayloadData = (userData) => ({
 export const fetchUserRouteData = (routeData) => ({
     type: FETCH_ROUTELIST_REQUEST,
     payload: routeData,
+  });
+export const fetchCategoryData = (productcategorydata) => ({
+    type: FETCH_PRODUCT_CATEGORY_LIST,
+    payload: productcategorydata,
   });
 
 
@@ -59,6 +63,34 @@ export const fetchUserRouteData = (routeData) => ({
                   data.push(item);
                 }
                 dispatch(fetchUserRouteData(data));
+
+              },
+              (error) => {
+                console.error('Error retrieving user data from the database:', error);
+              }
+            );
+          });
+
+    };
+  };
+  export const fetchProductGroupListData = () => {
+   
+   
+    return (dispatch) => {
+ 
+        db.transaction((tx) => {
+            tx.executeSql(
+              'SELECT * FROM product_groups', // Change the condition to match your use case
+              [],
+              (tx, results) => {
+                const data = [];
+               
+                for (let i = 0; i < results.rows.length; i++) {
+                  const item = results.rows.item(i);
+                 
+                  data.push(item);
+                }
+                dispatch(fetchCategoryData(data));
 
               },
               (error) => {

@@ -10,15 +10,21 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import NetInfo from '@react-native-community/netinfo';
 import Login from './screens/Login';
 import test from './screens/test';
 import Dashboared from './screens/Dashboared';
 import Home from './screens/Home';
 import SQLite from 'react-native-sqlite-storage';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCartData } from './action/offlineDataFetchAction';
+import { fetchAndUploadDoData, fetchAndUploadDoDetailsData, fetchCartData, fetchDoCheckedData, fetchDoData, fetchDoholdData, fetchalldoData } from './action/offlineDataFetchAction';
 import BottomTab from './navigation/BottomTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import GetOrder from './screens/GetOrder';
+import { callApiForItemList, callApiForProductGroup, callApiForSubCategory, fetchshopdata } from './action/SyncAction';
+import DoCheckedIndividual from './screens/DoCheckedIndividual';
+// import BackgroundFetch from 'react-native-background-fetch';
+import { fahim } from './components/BackgroundTasks';
 
 
 
@@ -30,21 +36,62 @@ const Stack = createNativeStackNavigator()
 
 const App = () => {
  
- 
+  // useEffect(() => {  
+
+  //   BackgroundFetch.configure({
+  //     minimumFetchInterval: 15, // Minimum fetch interval in minutes
+  //     stopOnTerminate: false, // Whether to stop background fetch on app termination
+  //     startOnBoot: true, // Whether to start background fetch on device boot
+  //     enableHeadless: true, // Whether to run the task even if the app is not running
+  //   }, () => {
+  //     fahim();
+  //   }, (error) => {
+  //     console.log('Background fetch failed to start', error);
+  //   });
+
+  // }, []);
 
   const dispatch = useDispatch();
 
+  
+  useEffect(() => {
+    // Call the function initially
+     NetInfo.fetch().then((state) => {
+      if (state.isConnected) {
+        dispatch(fetchAndUploadDoData());
+
+      } });
+   
+    // dispatch(fetchAndUploadDoDetailsData());
+
+    // Set up an interval to call the function every 5 minutes
+    const intervalId = setInterval(() => {
+      dispatch(fetchAndUploadDoData());
+    }, 2* 60 * 1000);
+
+    // Clear the interval on component unmount
+    // return () => clearInterval(intervalId);
+  }, [dispatch]);
 
 
 
   const [tablesCreated, setTablesCreated] = useState(false);
 
- 
+  
+
+  // console.log(doData);
  
   
 
   useEffect(() => {
+
     checkAndSendApiRequest();
+    dispatch(callApiForProductGroup());
+    dispatch(fetchDoholdData());
+    dispatch(fetchDoCheckedData())
+ 
+    // dispatch(callApiForSubCategory());
+    // dispatch(callApiForItemList());
   
     // Create the 'users' table if it doesn't exist and set the default value of isLoggedIn to 0
     db.transaction((tx) => {
@@ -85,10 +132,25 @@ const App = () => {
 
     db.transaction((tx) => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS item_info (item_id INTEGER PRIMARY KEY, item_name TEXT, item_name_short TEXT, item_group TEXT, category_id TEXT, subcategory_id TEXT, finish_goods_code TEXT, unit_name TEXT, pack_size TEXT, t_price TEXT, vat_per TEXT, sales_item_type TEXT)',
+        'CREATE TABLE IF NOT EXISTS item_info (item_id INTEGER PRIMARY KEY, item_name TEXT, item_name_short TEXT, item_group TEXT, category_id TEXT, subcategory_id TEXT, finish_goods_code TEXT, unit_name TEXT, pack_size TEXT, t_price TEXT, nsp_per TEXT, sales_item_type TEXT)',
         []
       );
     });
+
+    db.transaction((tx) => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS do_master (do_no TEXT, do_Date DATE, dealer_code TEXT,shop_name TEXT, status TEXT, remarks TEXT, visit TEXT, memo TEXT, longitude TEXT, latitude TEXT, upload_status TEXT)',
+        []
+      );
+    });
+
+    db.transaction((tx) => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS item_add_info(do_no TEXT, do_date DATE, item_id TEXT, item_name TEXT,dealer_code TEXT, t_price TEXT,nsp_per TEXT,pack_size TEXT,unit_price TEXT, total_unit TEXT, total_amt TEXT, do_synced TEXT,upload_status TEXT)',
+        []
+      );
+    });
+    
   
     // After creating tables, set tablesCreated to true
     setTablesCreated(true);
@@ -108,10 +170,7 @@ const App = () => {
       if (lastRequestTimestamp !== currentDate) {
         // TODO: Make your API request here
 
-         alert(<View>
-          <Text>fsdfdfsdfs</Text>
-         </View>);
-
+       
         // Update the last request timestamp in AsyncStorage
         await AsyncStorage.setItem('lastRequestTimestamp', currentDate);
 
@@ -119,9 +178,7 @@ const App = () => {
         console.log('API request sent!');
       } else {
         // Log or dispatch actions for when no API request is needed
-        alert(<View>
-          <Text>fsdfdfsdfs</Text>
-         </View>);
+
       }
     } catch (error) {
       console.error('Error:', error);
@@ -134,8 +191,18 @@ const App = () => {
     <NavigationContainer style={{ backgroundColor: 'white' }}>
       {tablesCreated ? (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
-          <Stack.Screen name="bottomtab" component={BottomTab}   />
+          <Stack.Screen name="Bottomtab" component={BottomTab}   />
           <Stack.Screen name="Login" component={Login}></Stack.Screen>
+          <Stack.Screen
+          name="GetOrder"
+          component={GetOrder}
+          options={{ headerShown: true, title: 'Get Order' }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="GetCheckedIndividual"
+          component={DoCheckedIndividual}
+          options={{ headerShown: true, title: 'Checked Do List' }}
+        ></Stack.Screen>
           
           {/* <Stack.Screen name="Home" component={Home}></Stack.Screen>  */}
           {/* <Stack.Screen name="Dashboared" component={Dashboared}></Stack.Screen>  */}

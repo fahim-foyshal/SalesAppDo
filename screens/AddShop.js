@@ -146,7 +146,7 @@ const [location, setLocation] = useState(null);
         shop_owner_name: '',
         manager_name: '',
         manager_mobile: '',
-        master_dealer_code: '',
+        master_dealer_code: user.dealer_code,
         product_group: '',
         target_shop: '',
         market_id: '',

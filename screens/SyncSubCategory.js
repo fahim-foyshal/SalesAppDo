@@ -42,7 +42,9 @@ const SyncSubCategory = () => {
               tx.executeSql(
                 'INSERT INTO subcategories (id, subcategory_name,category_id) VALUES (?,?,?)',
                 [category.id, category.subcategory_name,category.category_id]
-              );
+              ),(error) => {
+                console.error('Error something:', error);
+              };
             });
             setLoadingsync(false)
             setIsModalVisible(true);

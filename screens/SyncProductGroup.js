@@ -42,7 +42,9 @@ const SyncProductGroup = () => {
               tx.executeSql(
                 'INSERT INTO product_groups (id, group_name) VALUES (?, ?)',
                 [group.id, group.group_name]
-              );
+              ),(error) => {
+                console.error('Error something:', error);
+              };
             });
             setLoadingsync(false)
             setIsModalVisible(true);

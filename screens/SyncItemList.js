@@ -43,7 +43,7 @@ const SyncItemList = () => {
                 // Insert the new data into the item_info table
                 item_list.forEach((item) => {
                   tx.executeSql(
-                    'INSERT INTO item_info (item_id, item_name, item_name_short, item_group, category_id, subcategory_id, finish_goods_code, unit_name, pack_size, t_price, vat_per, sales_item_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    'INSERT INTO item_info (item_id, item_name, item_name_short, item_group, category_id, subcategory_id, finish_goods_code, unit_name, pack_size, t_price, nsp_per, sales_item_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     [
                       item.item_id,
                       item.item_name,
@@ -55,10 +55,12 @@ const SyncItemList = () => {
                       item.unit_name,
                       item.pack_size,
                       item.t_price,
-                      item.vat_per,
+                      item.nsp_per,
                       item.sales_item_type || '', // If sales_item_type is undefined, set it to an empty string
                     ]
-                  );
+                  ),(error) => {
+                    console.error('Error something:', error);
+                  };
                 });
             setLoadingsync(false)
             setIsModalVisible(true);
