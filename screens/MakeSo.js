@@ -151,7 +151,47 @@ const MakeSo = () => {
         }
       );
     });
-  }
+  }else{
+              docreationdata.do_no=timestamp;
+              docreationdata.dealer_code=user.dealer_code;
+              docreationdata.shop_name=selectedShopdetails.shop_name;
+              docreationdata.status= "MANUAL";
+              docreationdata.visit="1"
+              docreationdata.memo="1"
+              docreationdata.longitude= location.longitude;
+              docreationdata.latitude= location.latitude;
+
+
+            console.log(docreationdata);
+
+          setOpenitemlist(true);
+          db.transaction((tx) => {
+            tx.executeSql(
+              'INSERT INTO do_master (do_no, do_Date, dealer_code,shop_name, status, remarks, visit, memo, longitude, latitude, upload_status) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)',
+              [
+                docreationdata.do_no,
+                docreationdata.do_Date, // Convert date to string if needed
+                docreationdata.dealer_code,
+                docreationdata.shop_name,
+                docreationdata.status,
+                docreationdata.remarks,
+                docreationdata.visit,
+                docreationdata.memo,
+                docreationdata.longitude,
+                docreationdata.latitude,
+                docreationdata.upload_status.toString(), // Convert upload_status to string if needed
+              ],
+              (tx, results) => {
+                // Handle the result of the SQL execution if needed
+                console.log('Insert success:', results);
+                // navigation.navigate('GetOrder', { timestamp ,dealercode:docreationdata.dealer_code,shopName:selectedShopdetails.shop_name});
+              },
+              (error) => {
+                console.error('Error executing SQL query', error);
+              }
+            );
+          });
+            }
 
     }
   }, [timestamp]);

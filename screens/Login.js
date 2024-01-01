@@ -11,6 +11,7 @@ import SQLite from 'react-native-sqlite-storage';
 import LottieView from 'lottie-react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../action/UserDataAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const db = SQLite.openDatabase({ name: 'mydatabase.db', location: 'default' });
@@ -34,6 +35,7 @@ const Login = () => {
     const [loginData,setLoginData]=useState([{
       user:'',
       password:'',
+      organization:''
       
     }]);
     const navigation = useNavigation();
@@ -56,7 +58,13 @@ const Login = () => {
 
     const login = () => {
     //  vibrate();
+    AsyncStorage.getItem('organizationid').then((organization) => { 
+      loginData[0].organization=organization 
+      
+   
  
+  
+   
       axios
         .post(`https://ezzy-erp.com/newapp/api/api_users.php`,loginData)
         .then((response) => {
@@ -69,9 +77,9 @@ const Login = () => {
            
             // Save the user data to SQLite
             db.transaction((tx) => {
-            
+              tx.executeSql('DELETE FROM users');
               tx.executeSql(
-                'INSERT INTO users (user_id, user, password, full_name, mobile, dealer_code, region_id, zone_id, area_id, region_name, zone_name, area_name, isLoggedIn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                'INSERT INTO users (user_id, user, password, full_name, mobile, dealer_code, region_id, zone_id, area_id, region_name, zone_name, area_name,user_image, isLoggedIn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [
                   user.user_id,
                   user.user,
@@ -85,7 +93,10 @@ const Login = () => {
                   user.region_name,
                   user.zone_name,
                   user.area_name,
-                  1, // Set isLoggedIn to 1
+                  user.user_image, 
+                
+                  1,
+                  // Set isLoggedIn to 1
                 ], // Save the user's username and set isLoggedIn to 1
                 (tx, results) => {
                   if (results.rowsAffected > 0) {
@@ -111,7 +122,7 @@ const Login = () => {
           
            alert(error.response.data.message);
         });
-    
+      });
     }
 
     const callApiWithAreaId = (areaId) => {

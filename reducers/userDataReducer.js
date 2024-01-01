@@ -12,7 +12,7 @@ const initialState = {
   const userinformation = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_USERDATA_REQUEST:
-            
+          
             return {
               ...state,
               loading: true,

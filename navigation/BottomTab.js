@@ -16,6 +16,7 @@ import Dashboared from '../screens/Dashboared';
 import Delivery from '../screens/Delivery';
 import MakeSo from '../screens/MakeSo';
 import SvgComponent from './SvgComponent';
+import UserProfile from '../screens/UserProfile';
 
 
 const Tab = createBottomTabNavigator();
@@ -95,11 +96,13 @@ const BottomTab = () => {
           }}
         />
       <Tab.Screen
-          name="Reports"
-          component={MakeSo}
+          name="Profile"
+          component={UserProfile}
+          
           options={{
+            headerShown: true,
             tabBarIcon: ({ focused }) => (
-              <Icon.Star strokeWidth={3} stroke={focused ? '#852e45' : 'black'} />
+              <Icon.User strokeWidth={3} stroke={focused ? '#852e45' : 'black'} />
 
           ),
 

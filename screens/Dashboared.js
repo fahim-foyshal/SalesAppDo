@@ -9,6 +9,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { color, getThemeStyles } from '../themes/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { fetchshopdata } from '../action/SyncAction';
 
 const db = SQLite.openDatabase({ name: 'mydatabase.db', location: 'default' });
 
@@ -17,6 +18,7 @@ const Dashboared = () => {
 
   const orderData = useSelector(state => state.offlineOrderdetails.orderData);
    
+  // dispatch(fetchshopdata(user.dealer_code));
  
 
   const handleSubmitonline=(shopcreationdata)=>{
@@ -124,6 +126,9 @@ const Dashboared = () => {
   const user = useSelector(state => state.useralldetails.userData);
   const theme = useSelector((state) => state.themecolor.theme);
   const themechoice = color[theme];
+
+  
+  // dispatch(fetchshopdata(user.dealer_code));
   // useEffect(() => {
   //   // Perform a SELECT query to retrieve user data from the users table
   //   db.transaction((tx) => {
@@ -165,17 +170,18 @@ const Dashboared = () => {
       <TouchableOpacity className="w-[30px] h-[20px]" onPress={() => navigation.openDrawer()} >
           <FontAwesomeIcon icon={faBars} />
         </TouchableOpacity>
-        <Image source={require("../assest/logo.png")} className="w-[60px] h-[60px]"/>
+        <Image source={require("../assest/logo1.png")} className="w-[60px] h-[60px]"/>
     <View className="relative">
 
-    <Text className="text-[#9453fc]">SECONDARY</Text>
+    <Text className="text-[#2596be]">SECONDARY</Text>
         <View className="flex flex-row">
 
-            <Text  className="text-[#fb7277]">S</Text>
+            {/* <Text  className="text-[#fb7277]">S</Text>
             <Text className="text-[#5fc219]">A</Text>
             <Text className="text-[#c566fb]">L</Text>
             <Text className="text-[#98e124]">E</Text>
-            <Text className="text-[#9453fc]">S</Text>
+            <Text className="text-[#9453fc]">S</Text> */}
+            <Text className="text-[#0ca2e7]">SALES</Text>
         </View>
     
     

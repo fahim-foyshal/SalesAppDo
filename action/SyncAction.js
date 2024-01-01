@@ -148,13 +148,26 @@ export const  fetchshopdata=(dealercode)=>{
   }
 
 function fetchshopdata2(data){
-    console.log(data);
+
     data.forEach((item) => {
 
 
 
 
       db.transaction((tx) => {
+        tx.executeSql(
+          'DELETE FROM stores WHERE upload_status <> 0',
+          [// or use the appropriate datetime value
+          ],
+          (tx, results) => {
+            if (results.rowsAffected > 0) {
+               
+              // Clear the form or take appropriate action
+            } else {
+              console.error('Failed to save data to SQLite');
+            }
+          }
+        );
       tx.executeSql(
         'INSERT INTO stores (shop_name,shop_owner_name, manager_name, manager_mobile, master_dealer_code, product_group, target_shop, market_id, route_id, area_id, zone_id, region_id, shop_class, shop_type, shop_channel, shop_route_type, shop_identity, mobile, shop_address, status, otp, latitude, longitude, picture, image_compress, copy_done, entry_by, datetime,upload_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)',
         [

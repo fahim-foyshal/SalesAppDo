@@ -156,7 +156,7 @@ function fetchandUpload2(data){
     axios
       .post('https://ezzy-erp.com/newapp/api/api_ss_doMaster.php', arrayitem)
       .then((response) => {
-        console.log('API Response:', response.data);
+    
 
         db.transaction((tx) => {  // Update upload status in the same transaction
         tx.executeSql(
@@ -179,9 +179,9 @@ function fetchandUpload2(data){
             for (let i = 0; i < results.rows.length; i++) {
 
               const dodetailsitems = results.rows.item(i);
-              console.log("dddddddddzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzdddddddddddddddddddddddddddddd");
+      
               console.log(dodetailsitems);
-              console.log("ddddddddddddddddddddddddddddddddddddddd");
+            
               data2.push({
                 do_no: response.data.do_no,
                 do_date: dodetailsitems.do_date,
@@ -261,9 +261,8 @@ function fetchandUpload2(data){
 function fetchAndUploadDoDetailsData2(data){
 
   data.forEach((item) => {
-    console.log("ddddddddddddddddddddddddddddddddddddddd");
-    console.log(item);
-    console.log("ddddddddddddddddddddddddddddddddddddddd");
+
+  
     const arrayitem = [item];
     axios
       .post('https://ezzy-erp.com/newapp/api/api_doDetails.php', arrayitem)
@@ -316,7 +315,7 @@ export const fetchDoholdData = () => {
   
             for (let i = 0; i < len; i++) {
               const item = results.rows.item(i);
-              console.log(item);
+             
               item.formattedDateTime = formatDateTime(item.do_Date);
               items.push(item);
               
@@ -353,4 +352,98 @@ export const fetchDoCheckedData = () => {
         );
   });
   };
+};
+
+
+// export const uploadAttendance=(data)=>{
+
+
+
+  
+ 
+//     axios
+//       .post('https://ezzy-erp.com/newapp/api/api_ss_attendance.php', arrayitem)
+//       .then((response) => {
+//         console.log('API Response:', response.data);
+
+//         db.transaction((tx) => {  // Update upload status in the same transaction
+//         tx.executeSql(
+//           'UPDATE item_add_info SET do_no = ?,do_synced = ?, upload_status = ? WHERE do_no = ?',
+//           [item.do_no,1,1, item.do_no],
+//           (_, results) => {
+//             console.log('Upload status updated to 1 for id:fggggggggggiiiiiiiiiii');
+//           },
+//           (error) => {
+//             console.error('Error updating upload status:', error);
+//           }
+//         );
+//         // tx.executeSql(
+//         //   'UPDATE item_add_info SET do_no=?,do_synced=? WHERE do_no=?',
+//         //   [response.data.do_no, 1, item.do_no],
+//         //   (_, results) => {
+//         //     console.log('Upload status updated to 1 for id:', item.id);
+//         //   },
+//         //   (error) => {
+//         //     console.error('Error updating upload status:', error);
+//         //   }
+//         // );
+//       });
+//         // Update for ss doDetails in the same transaction
+
+//       })
+//       .catch((error) => {
+//         console.error('Error sending data to API:', error);
+//       });
+ 
+// }
+
+
+export const uploadAttendance = () => {
+  return (dispatch) => {
+
+ console.log("fsssssssssssssssssssssssssssssssssssssssss")
+
+  const currentDate = new Date();
+  const currentTime = currentDate.toTimeString().split(' ')[0]; // Format HH:mm:ss
+  const currentDateOnly = currentDate.toISOString().split('T')[0];
+
+  // Fetch data from SQLite database
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT * FROM ss_attendancesheet WHERE date = ?',
+      [currentDateOnly],
+      (_, result) => {
+        if (result.rows.length > 0) {
+          const attendanceData = result.rows.item(0);
+
+          console.log(attendanceData);
+          
+
+          // Make API call to send attendance data
+          axios.post('https://ezzy-erp.com/newapp/api/api_ss_attendance.php', [{
+            username: attendanceData.username,
+            note: attendanceData.note,
+            date: attendanceData.date,
+            intime: attendanceData.intime,
+            outtime: attendanceData.outtime,
+          }])
+            .then(response => {
+              console.log('Attendance data sent successfully:', response.data);
+            })
+            .catch(error => {
+              console.error('Error sending attendance data:', error);
+            });
+        } else {
+          console.log('No attendance data found for the current date.');
+        }
+      },
+      (error) => {
+        console.error('Error fetching attendance data:', error);
+      }
+    );
+  });
+
+
+  console.log("Data Inserted Successfully");
+}
 };

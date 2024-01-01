@@ -499,8 +499,7 @@ const GetOrder = ({ route }) => {
               onChange={(item) => {
                 setSelectedproductitemid(item.item_id);
                 setItemdiscountpercentage(item.nsp_per)
-                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                console.log(item);
+              
                 setSelectedproductitem(item);
                 setIsPlusOpen(true)
 

@@ -31,7 +31,7 @@ export const fetchCategoryData = (productcategorydata) => ({
                 if (results.rows.length > 0) {
                   // Get the first row (assuming there's only one user with isLoggedIn = 1)
                   const user = results.rows.item(0);
-                
+                  console.log("bbbbbbbbbbbbbbb"+user)
                   dispatch(fetchUserPayloadData(user));
                  
                 }

@@ -20,7 +20,7 @@ import { fetchProductGroupListData, fetchUserData, fetchUserRouteListData } from
 import AddShop from './AddShop';
 import offlineOrder from '../reducers/OfflineOrder';
 import OrderData from './OrderData';
-import { fetchCartData } from '../action/offlineDataFetchAction';
+import { fetchCartData, uploadAttendance } from '../action/offlineDataFetchAction';
 import HomeDashBoard from './HomeDashBoard';
 import ThemeSwitcher from '../components/ThemeSwitcher';
 import MakeSo from './MakeSo';
@@ -31,6 +31,9 @@ import CustomDrawer from '../navigation/CustomDrawer';
 import { fetchshopdata } from '../action/SyncAction';
 import DoHoldList from './DoHoldList';
 import DoCheckedList from './DoCheckedList';
+import BackgroundLocation from '../BackGroundTasks/BackgroundLocation';
+import Attendance from './Attendance';
+import MonthlyAttendance from './MonthlyAttendance';
 
 
 
@@ -45,12 +48,16 @@ const db = SQLite.openDatabase({ name: 'mydatabase.db', location: 'default' });
 
 
 const Home = ({navigation}) => {
+
+  
   const dispatch = useDispatch();
    
   dispatch(fetchUserData());
   dispatch(fetchUserRouteListData());
   dispatch(fetchCartData());
   dispatch(fetchProductGroupListData());
+  dispatch(uploadAttendance())
+  
   
 
  
@@ -76,11 +83,11 @@ const Home = ({navigation}) => {
             
           }
           else{
-            navigation.navigate('Login')
+            
           }
         },
         (error) => {
-          navigation.navigate('Login')
+   
         
         }
       );
@@ -106,6 +113,9 @@ const Home = ({navigation}) => {
       <Drawer.Screen name="Category" component={SyncProductGroup}   />
       <Drawer.Screen name="SubCategory" component={SyncSubCategory}   />
       <Drawer.Screen name="ItemList" component={syncItemList}   />
+      <Drawer.Screen name="Location" component={BackgroundLocation}   />
+      <Drawer.Screen name="Attendance" component={Attendance}   />
+      <Drawer.Screen name="MonthlyAttendance" component={MonthlyAttendance}   />
       
       {/* <Drawer.Screen name="StoreAdd" component={StoreAddScreen} initialParams={{ userInfo:userData,location:location}} />
       <Drawer.Screen name="OrderData" component={OrderData} initialParams={{ userInfo:userData,location:location}} /> */}

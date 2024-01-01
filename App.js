@@ -23,10 +23,108 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GetOrder from './screens/GetOrder';
 import { callApiForItemList, callApiForProductGroup, callApiForSubCategory, fetchshopdata } from './action/SyncAction';
 import DoCheckedIndividual from './screens/DoCheckedIndividual';
-// import BackgroundFetch from 'react-native-background-fetch';
-import { fahim } from './components/BackgroundTasks';
+import BackgroundFetch from 'react-native-background-fetch';
+import axios from 'axios';
+import Geolocation from '@react-native-community/geolocation';
+import { fahimbackground } from './components/BackgroundTasks';
+import Logincheck from './screens/Logincheck';
+import MonthlyAttendance from './screens/MonthlyAttendance';
+import Organization from './screens/Organization';
+
+import BackgroundService from 'react-native-background-actions';
 
 
+
+// import './components/BackgroundTasks.js';
+
+Geolocation.setRNConfiguration({
+  skipPermissionRequests: false,
+  authorizationLevel: 'auto',
+  enableBackgroundLocationUpdates: true,
+  locationProvider: 'auto',
+});
+
+// const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+
+
+
+
+// You can do anything in your task such as network requests, timers and so on,
+// as long as it doesn't touch UI. Once your task completes (i.e. the promise is resolved),
+// React Native will go into "paused" mode (unless there are other tasks running,
+// or there is a foreground app).
+// const veryIntensiveTask = async (taskDataArguments) => {
+
+
+
+
+
+//     // Example of an infinite loop task
+//     const { delay } = taskDataArguments;
+//     await new Promise( async (resolve) => {
+//         for (let i = 0; BackgroundService.isRunning(); i++) {
+      
+
+// //           console.log("hasannnnnnnnnnnnnnnn");
+
+// Geolocation.getCurrentPosition(info => {
+//   console.log(info);
+
+//   const { latitude, longitude, accuracy, altitude, heading, speed } = info.coords;
+//   const currentDate = new Date();
+//   const locationString = "http://192.144.82.199/~mepgroup/1027/sales_mod/pages/report/view_map.php?lat=" + latitude + "&long=" + longitude;
+
+//   // Format the current time and date separately
+//   const currentTime = currentDate.toTimeString().split(' ')[0]; // Format HH:mm:ss
+//   const currentDateOnly = currentDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+//   // Create the payload with latitude, longitude, altitude, heading, speed, and accuracy
+//   const payload = [{
+//       msg: "testgetposition",
+//       date: currentDateOnly,
+//       time: currentTime,
+//       latitude,
+//       longitude,
+//       altitude,
+//       heading,
+//       speed,
+//       accuracy,
+//       locationString
+//   }];
+
+//   // Call your API with the modified payload
+//   axios.post('https://ezzy-erp.com/newapp/api/api_testAutoBackground.php', payload)
+//       .then((response) => {
+//           console.log('API Response:', response.data);
+
+//           // Update for ss doDetails in the same transaction
+//       })
+//       .catch((error) => {
+//           console.error('Error sending data to API:', error);
+//       });
+// });
+
+
+
+//             await sleep(delay);
+//         }
+//     });
+// };
+
+// const options = {
+//     taskName: 'Example',
+//     taskTitle: 'ExampleTask title',
+//     taskDesc: 'ExampleTask description',
+//     taskIcon: {
+//         name: 'ic_launcher',
+//         type: 'mipmap',
+//     },
+//     color: '#ff00ff',
+//     linkingURI: 'fahimsalesapp://chat/jane', // See Deep Linking for more info
+//     parameters: {
+//         delay: 120000,
+//     },
+// };
 
 
 const db = SQLite.openDatabase({ name: 'mydatabase.db', location: 'default' });
@@ -35,26 +133,88 @@ const Stack = createNativeStackNavigator()
 
 
 const App = () => {
+
+
+  const linking = {
+    prefixes: ['fahimsalesapp://'], // your custom scheme
+    config: {
+      screens: {
+        Bottomtab: {
+          path: 'bottomtab',
+          screens: {
+            // Define your screens here
+            Home: 'home',
+            Login: 'login',
+            GetOrder: 'getorder', // Adjust the path for other screens as needed
+            GetCheckedIndividual: 'getcheckedindividual', // Adjust the path for other screens as needed
+          },
+        },
+        Backgroundlocation:{
+          path:"Login",
+        }
+      },
+    },
+  };
+
+  // const startBackgroundService = async () => {
+  //   await BackgroundService.start(veryIntensiveTask, options);
+  // };
+
+  // useEffect(() => {
+  //   // startBackgroundService();
+  //   console.log("hi i am watch");
+  //   const watchId = Geolocation.watchPosition(
+  //     (position) => {
+  //       const { latitude, longitude } = position.coords;
+  //       const currentDate = new Date();
+  //       const currentTime = currentDate.toTimeString().split(' ')[0]; // Format HH:mm:ss
+  //       const currentDateOnly = currentDate.toISOString().split('T')[0]; 
+  //       console.log(currentTime);// Format YYYY-MM-DD
+        
+      
+  //                         // Create the payload with latitude and longitude
+  //                     const payload = [{
+  //                             msg: "testwatchposition",
+  //                             date: currentDateOnly,
+  //                             time:currentTime,
+  //                             latitude,
+  //                             longitude
+  //                         }];
+
+  //       axios.post('https://ezzy-erp.com/newapp/api/api_testAutoBackground.php', payload)
+  //         .then((response) => {
+  //           console.log('Location updated successfully:', response.data);
+  //         })
+  //         .catch((error) => {
+  //           console.error('Error updating location:', error);
+  //         });
+  //     },
+  //     (error) => {
+  //       console.log('Error getting location:', error);
+  //     },
+  //     {
+  //       enableHighAccuracy: true, // Use high accuracy mode if available
+  //       timeout: 60000, // Set a timeout of 5 seconds
+  //       maximumAge: 10000, // Accept a cached position that is at most 10 seconds old
+  //       distanceFilter: 10, // Minimum distance (in meters) to trigger an update
+  //     }
+  //   );
+
+  //   // Clean up the watchId when the component unmounts
+  //   return () => {
+  //     Geolocation.clearWatch(watchId);
+  //   };
+  // }, []); 
+  
+
  
-  // useEffect(() => {  
 
-  //   BackgroundFetch.configure({
-  //     minimumFetchInterval: 15, // Minimum fetch interval in minutes
-  //     stopOnTerminate: false, // Whether to stop background fetch on app termination
-  //     startOnBoot: true, // Whether to start background fetch on device boot
-  //     enableHeadless: true, // Whether to run the task even if the app is not running
-  //   }, () => {
-  //     fahim();
-  //   }, (error) => {
-  //     console.log('Background fetch failed to start', error);
-  //   });
-
-  // }, []);
 
   const dispatch = useDispatch();
 
-  
   useEffect(() => {
+
+   
     // Call the function initially
      NetInfo.fetch().then((state) => {
       if (state.isConnected) {
@@ -84,7 +244,6 @@ const App = () => {
   
 
   useEffect(() => {
-
     checkAndSendApiRequest();
     dispatch(callApiForProductGroup());
     dispatch(fetchDoholdData());
@@ -96,7 +255,7 @@ const App = () => {
     // Create the 'users' table if it doesn't exist and set the default value of isLoggedIn to 0
     db.transaction((tx) => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS users (user_id TEXT PRIMARY KEY, user TEXT, password TEXT, full_name TEXT, mobile TEXT, dealer_code TEXT, region_id TEXT, zone_id TEXT, area_id TEXT, region_name TEXT, zone_name TEXT, area_name TEXT, isLoggedIn TEXT DEFAULT 0)',
+        'CREATE TABLE IF NOT EXISTS users (user_id TEXT PRIMARY KEY, user TEXT, password TEXT, full_name TEXT, mobile TEXT, dealer_code TEXT, region_id TEXT, zone_id TEXT, area_id TEXT, region_name TEXT, zone_name TEXT, area_name TEXT, user_image TEXT,isLoggedIn TEXT DEFAULT 0)',
         []
       );
     });
@@ -150,6 +309,12 @@ const App = () => {
         []
       );
     });
+    db.transaction((tx) => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS ss_attendancesheet(id INTEGER PRIMARY KEY AUTOINCREMENT,    username VARCHAR(255),date DATE,intime TIME, outtime TIME, note TEXT)',
+        []
+      );
+    });
     
   
     // After creating tables, set tablesCreated to true
@@ -188,11 +353,13 @@ const App = () => {
   
   return (
 
-    <NavigationContainer style={{ backgroundColor: 'white' }}>
+    <NavigationContainer  linking={linking} style={{ backgroundColor: 'white' }}>
       {tablesCreated ? (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+          <Stack.Screen name="logincheck" component={Logincheck}   />
           <Stack.Screen name="Bottomtab" component={BottomTab}   />
           <Stack.Screen name="Login" component={Login}></Stack.Screen>
+          <Stack.Screen name="Organization" component={Organization}></Stack.Screen>
           <Stack.Screen
           name="GetOrder"
           component={GetOrder}
@@ -202,6 +369,11 @@ const App = () => {
           name="GetCheckedIndividual"
           component={DoCheckedIndividual}
           options={{ headerShown: true, title: 'Checked Do List' }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="MonthlyAttendance"
+          component={MonthlyAttendance}
+          options={{ headerShown: true, title: 'Monthly Attendance' }}
         ></Stack.Screen>
           
           {/* <Stack.Screen name="Home" component={Home}></Stack.Screen>  */}
