@@ -373,7 +373,7 @@ const App = () => {
         <Stack.Screen
           name="MonthlyAttendance"
           component={MonthlyAttendance}
-          options={{ headerShown: true, title: 'Monthly Attendance' }}
+          options={{ headerShown: false, title: '' }}
         ></Stack.Screen>
           
           {/* <Stack.Screen name="Home" component={Home}></Stack.Screen>  */}

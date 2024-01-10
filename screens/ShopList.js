@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet,Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image, } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import {faBars, faBold} from '@fortawesome/free-solid-svg-icons';
@@ -74,7 +74,8 @@ const MonthlyAttendance = () => {
     const year = new Date(formattedDate).getFullYear();
     const monthIndex = new Date(formattedDate).getMonth() + 1; // Adding 1 to get the correct month
     return (
-      <View className="bg-white w-[] rounded-md    flex flex-row flex-wrap" style={{elevation:8,height:72,}} key={formattedDate}>
+      <View>
+      <View className="bg-white rounded-md m-2   flex flex-row flex-wrap" style={{elevation:8,height:100,width:380}} key={formattedDate}>
         
         <View style={{
                       width: 62,
@@ -85,99 +86,49 @@ const MonthlyAttendance = () => {
                       justifyContent: 'center',
                       alignItems: 'center',
                       marginLeft:25,
-                      marginTop:5
+                      marginTop:10
                     }}
                   >
-                    {/* <FontAwesomeIcon icon={faMoneyBill1} size={30} color="white" /> */}
-                    {/* <Text style={{ fontFamily: 'Roboto', fontSize: 15, color: 'white' }}>{formattedDate}</Text> */}
-                <Text style={{ fontFamily: 'Roboto',fontWeight:'bold', fontSize: 22, color: 'white' }}>{day}</Text>
-                <Text style={{ fontFamily: 'Roboto',  color: 'white' }}>{year+'-'+monthIndex}</Text>
-               
-          </View>  
-          <View className="flex flex-row flex-wrap"style={{
-                    width: 117,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                   // backgroundColor:'red',
-                    marginLeft:25,
-                    marginTop:5
-                    }}
-          
-          >
-                <FontAwesomeIcon icon={faClock} size={20} color="green" />
-                
-                <Text style={{ fontFamily: 'Roboto', fontSize: 18,marginLeft:10 }}>08:05 AM</Text>
-                <Text style={{ fontFamily: 'Roboto', marginLeft:10 }}>CLOCK-IN</Text>
-            
-          </View>
-        
-          <View className="flex flex-row flex-wrap"style={{
-                    width: 117,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                   // backgroundColor:'yellow',
-                    marginLeft:15,
-                    marginTop:5
-                  
-                    }}
-          
-          >
-                <FontAwesomeIcon icon={faClock} size={20} color="red" />
-                <Text style={{ fontFamily: 'Roboto', fontSize: 18,marginLeft:10 }}>08:05 AM</Text>
-                <Text style={{ fontFamily: 'Roboto',marginLeft:10 }}>CLOCK-OUT</Text>
-            
-          </View> 
-
- 
-
-
-        
-        {/* <Text>{formattedDate}</Text>
-        {attendanceDataForDay ? (
-          renderItem({ item: attendanceDataForDay })
-        ) : (
-          <Text className="text-center">absent</Text>
-        )} */}
-      </View>
-    );
-  };
-
-  return (
-
-
-    <View style={{}}>
-      <View className=" h-[150px] w-[]" style={{backgroundColor:"#318CE7",borderBottomLeftRadius:0,borderBottomRightRadius:0}}>
-      <View className="flex flex-row">
-            <View
-              className="w-[80px] m-3 h-[80px] bg-[#f2f2f2] rounded-full"
-              style={{elevation: 0,}}>
               <Image
-                source={require('../assest/images.jpeg')} // Replace with the actual path to your image
+                source={require('../assest/shwapno.jpeg')} // Replace with the actual path to your image
                 style={{
                   width: 80,
                   height: 80,
                   borderRadius: 38, // Half of the width and height to make it circular
                 }}
               />
-            </View>
-            <View
-              className="w-[130px] m-3 h-[80px] rounded-xl "
-              style={{elevation: 0}}>
-               <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>Nitol Arafat</Text>
-                <Text style={{ fontSize: 15, color: 'yellow' }}>Sales Manager</Text>
-                <Text style={{ fontSize: 15, color: 'yellow' }}>ID : 0078</Text>
-              </View>
+               
+          </View>  
+          <View className=""style={{
+                    width: 250,
+                    // justifyContent: 'center',
+                    // alignItems: 'center',
+                   // backgroundColor:'red',
+                    marginLeft:25,
+                    marginTop:10,
+                    
+                    }}
+          
+          >
+                <Text style={{ fontFamily: 'Roboto',color:'blue' }}>Shop Name: Shopno Super Shop</Text>
+                <Text style={{ fontFamily: 'Roboto',}}>Address: Uttara, sector 10</Text>
+                <Text style={{ fontFamily: 'Roboto',}}>Address: Uttara, sector 10</Text>
+                <Text style={{ fontFamily: 'Roboto',}}>Address: Uttara, sector 10</Text>
+            
           </View>
+      </View>
+      </View>
+    );
+  };
 
-      </View >
-      <View style={{marginTop:0,borderRadius:50}}>
+  return (
+    <View style={styles.container}>
       <FlatList
         data={daysInMonth}
         renderItem={({ item }) => renderDayItem(item)}
         keyExtractor={(date) => date.toISOString()}
         showsVerticalScrollIndicator={false}
       />
-      </View>
     </View>
   );
 };
