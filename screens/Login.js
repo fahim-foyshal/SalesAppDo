@@ -12,6 +12,7 @@ import LottieView from 'lottie-react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../action/UserDataAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { red } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 
 
 const db = SQLite.openDatabase({ name: 'mydatabase.db', location: 'default' });
@@ -178,37 +179,67 @@ const Login = () => {
   return (
 <ScrollView>
    <View className="mt-0" style={{height:800}}>
-<View className=" -left-5 bg-[#852e45] h-[36%] w-[110%] rounded-b-[80px]  " >
-  <Text className="text-center text-4xl font-extrabold relative top-28 text-white rou">Login</Text>
+<View className=" -left-5 bg-[#0096FF] h-[30%] w-[110%] rounded-b-[0px]  " style={{  overflow: 'visible'}} >
+<View style={{ alignItems: 'flex-start', paddingHorizontal: 30 ,paddingVertical:50}}>
+  <Text style={{ fontSize: 40, fontWeight: 'bold', color: 'white' }}>Welcome</Text>
+  <Text style={{ fontSize: 40, fontWeight: 'bold', color: 'white' }}>Back</Text>
 </View>
-<View className="fixed -top-36 bg-white w-[] h-[60%] m-8 rounded-[80px] drop-shadow-[]" style={{elevation:10}}>
+</View>
+<View className="-left-8 -top-0 w-[100%] bg-white w-[] h-[100%] m-8 rounded-[40px] drop-shadow-[]" style={{elevation:10,marginTop:-40}}>
 
-      <View style={{zIndex:4}} className={`  left-10 transform scale-[0.8] absolute bg-transparent ${loading?'visible':'hidden z-50'}`}>
-        <LottieView  style={{position:'absolute',width:300,height:300}} source={require('../animations/welcome.json')} autoPlay loop />
-        </View>
-        <TextInput
-         placeholder='Enter your username'
-         placeholderTextColor={'#808080'}
+  {/* <Image source={require("../assest/demo.png")}
+  style={{
+    width:100, // Adjust the width as needed
+    height: 100, // Adjust the height as needed
+    resizeMode: 'contain', // or 'cover', 'stretch', etc., based on your preference
+    alignSelf: 'center', // Position it based on your layout requirements
+    marginTop: 30, // Adjust the top margin as needed
+  }}
+  
+  /> */}
+
+
+      <TextInput
+         placeholder='  Enter your username'
+
+         placeholderTextColor={'#4169E1'}
          cursorColor={'#808080'}
+
          onChangeText={(text) => handleInputChange('user', text)}
-         className=" top-56 left-10 relative w-[78%] h-10 rounded-xl bg-white" style={{elevation:10}}></TextInput>
+         
+         className=" top-56 left-10 relative w-[90%]  rounded-xl bg-white" 
+         style={{elevation:10,height:'11%',
+              marginTop:-150,
+              color:'#1134A6',
+              borderColor: '#0096FF',
+              height:'7%',
+              marginLeft:-18}}>
+        </TextInput>
+
         <TextInput
-         placeholder='Enter your password'
-         placeholderTextColor={'#808080'}
+         placeholder='  Enter your password'
+         placeholderTextColor={'#4169E1'}
          cursorColor={'#808080'}
          onChangeText={(text) => handleInputChange('password', text)}
-         className=" top-64 left-10 relative w-[78%] h-10 rounded-xl bg-white" style={{elevation:10}}></TextInput>
+         className=" top-64 left-10 relative w-[90%] h-10 rounded-xl bg-white" 
+         style={{elevation:10,height:'11%',
+              color:'#1134A6',
+              height:'7%',
+              marginLeft:-18}}>
+      </TextInput>
+
   <TouchableOpacity
     onPress={login}
     style={{
-      backgroundColor: '#852e45',
-      borderRadius: 5,
+      backgroundColor: '#0096FF',
+      borderRadius: 10,
       alignItems: 'center',
-      width: '78%',
+      width: '90%',
+      height:'7%',
       paddingVertical: 5,
       // marginVertical: 10,
-      marginTop:300,
-     marginLeft:40
+      marginTop:350,
+      marginLeft:20
       
     }}>
     <Text style={{color:'white', fontSize: 25, fontWeight: 'bold'}}>

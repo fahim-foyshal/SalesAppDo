@@ -7,6 +7,7 @@ import { faHome, faMinus, faPlus, faTruck } from '@fortawesome/free-solid-svg-ic
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import SQLite from 'react-native-sqlite-storage';
+import { faUserCircle,faAreaChart,faShop,faFileCircleCheck,faPlugCircleBolt,faMoneyBill1,faChartBar,faNewspaper } from '@fortawesome/free-solid-svg-icons';
 
 import {
   SafeAreaView,
@@ -17,6 +18,7 @@ import {
   TouchableOpacity,
   useColorScheme,
   View,
+  Image,
 } from 'react-native';
 import { fetchDoCheckedData, fetchDoCHECKEDDATA, fetchDoholdData } from '../action/offlineDataFetchAction';
 
@@ -78,17 +80,20 @@ const DoCheckedList = () => {
 
       const renderCards = () => {
         return doHoldData.map((item, index) => (
+
+          
           <View key={index} style={styles.card}>
-        <TouchableOpacity onPress={() => handlepressforgetorder(item)}>
-        <View style={styles.cardflex}>
-                    <Text style={{color:'#ff8f9c'}}>DO no: {item.do_no}</Text>
-                    <Text style={{color:'#ff8f9c'}}>Shop Name: {item.shop_name}</Text>
-            </View>
+          
+            <TouchableOpacity onPress={() => handlepressforgetorder(item)}>
+                <View style={styles.cardflex}>
+                        <Text style={{color:'#ff8f9c'}}>DO no: {item.do_no}</Text>
+                        <Text style={{color:'#ff8f9c'}}>Shop Name: {item.shop_name}</Text>
+                </View>
+                
+                {console.log(item.do_date)}
+                <Text>{item.formattedDateTime}</Text>
             
-            {console.log(item.do_date)}
-            <Text>{item.formattedDateTime}</Text>
-        
-        </TouchableOpacity>
+            </TouchableOpacity>
 
              {/* <Text>Total Unit: {item.total_unit}</Text> */}
             {/*<Text>Total Amount: {item.total_amt}</Text> */}
@@ -99,19 +104,38 @@ const DoCheckedList = () => {
 
   return (
     <>
+            <View className="bg-white h-[120px] w-[] p-3" style={{backgroundColor:"#318CE7"}}>
 
+            <View className="flex flex-row">
+            <View
+              className="w-[80px] m-3 h-[80px] bg-[#f2f2f2] rounded-full"
+              style={{elevation: 0,}}>
+
+            </View>
+            <View
+              className="w-[130px] m-3 h-[80px] rounded-xl "
+              style={{elevation: 0}}>
+               <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>kamal hossain</Text>
+                <Text style={{ fontSize: 15, color: 'yellow' }}>sales manager</Text>
+                <Text style={{ fontSize: 15, color: 'yellow' }}>ID :00155</Text>
+              </View>
+          </View>
+
+
+            </View>
+            <View className="bg-white h-[] w-[] p-3" style={{backgroundColor:"red"}}>
+            
 <ScrollView>
-      {/* Your existing UI components */}
-      {/* ... */}
 
-      {/* Render cards based on the itemdatalist */}
       {renderCards()}
 
       {/* Your existing UI components */}
       {/* ... */}
     </ScrollView>
-      
+    </View>
+     
     </>
+
   )
 }
 
