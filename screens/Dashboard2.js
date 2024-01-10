@@ -15,12 +15,10 @@ import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 import {color, getThemeStyles} from '../themes/colors';
 //import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBars, faBold} from '@fortawesome/free-solid-svg-icons';
+import {faBars} from '@fortawesome/free-solid-svg-icons';
 import {fetchshopdata} from '../action/SyncAction';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUserCircle,faAreaChart,faShop,faFileCircleCheck,faPlugCircleBolt,faMoneyBill1,faChartBar,faNewspaper } from '@fortawesome/free-solid-svg-icons';
-import { Bold } from 'react-native-feather';
-import { amberA700, white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import { faUserCircle,faAreaChart,faShop,faFileCircleCheck,faPlugCircleBolt,faMoneyBill1,faChartBar } from '@fortawesome/free-solid-svg-icons';
 
 const db = SQLite.openDatabase({name: 'mydatabase.db', location: 'default'});
 
@@ -201,9 +199,9 @@ const Dashboared = () => {
             <View
               className="w-[130px] m-3 h-[80px] rounded-xl "
               style={{elevation: 0}}>
-               <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>kamal hossain</Text>
-                <Text style={{ fontSize: 15, color: 'yellow' }}>sales manager</Text>
-                <Text style={{ fontSize: 15, color: 'yellow' }}>ID :00155</Text>
+               <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>Nitol Arafat</Text>
+                <Text style={{ fontSize: 15, color: 'yellow' }}>Sales Manager</Text>
+                <Text style={{ fontSize: 15, color: 'yellow' }}>ID : 0078</Text>
               </View>
           </View>
         </View>
@@ -212,6 +210,10 @@ const Dashboared = () => {
               marginTop:-40,
               height:260,
               paddingTop:13,
+            
+
+              
+              
               }}>
           <View className="flex flex-row flex-wrap " style={{}} >
             <View style={{  alignItems: 'center', marginLeft:15, }}>
@@ -365,134 +367,59 @@ const Dashboared = () => {
 
           
         </View>
-        <View style={{marginTop:20,}}>
-          <View className="flex flex-row flex-wrap " style={{}} >
-            <View style={{  alignItems: 'center', marginLeft:10, }}>
-                  <View
-                    style={{
-                      width: 115,
-                      height: 80,
-                      borderRadius: 10,
-                      backgroundColor: '#FFA500',
-                      elevation: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faNewspaper} size={25} color="white" />
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 15, color: 'white' }}>Today's Orders</Text>
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 20, color: 'white' }}>10</Text>
-                  </View>
-               
+        <View style={{}}>
+          <View className="bg-white m-1 flex flex-row" style={{elevation:10,backgroundColor:'#DAF7A6'}}>
+            <View className="w-[100%]  m-2" style={{elevation:0}}>
+                <Text>
+                  <Text className="font-extrabold text-base" style={{elevation:0}}>Shop Name:</Text>{' '}
+                  Moyer Doya Super Shop
+                </Text>
+
+                <Text>
+                  <Text className="font-extrabold text-base">Date:</Text>{' '}
+                  13.12.2023
+                </Text>
+                <Text>
+                  <Text className="font-extrabold text-base">Address: </Text>
+                Dhaka, Bangladesh
+                </Text>
               </View>
+          </View>
 
+          <View className="bg-white  m-1 flex flex-row" style={{elevation:0,backgroundColor:'#FFE5B4'}}>
+            <View className="w-[100%]  m-2" style={{elevation:0}}>
+                <Text>
+                  <Text className="font-extrabold text-base" style={{elevation:0}}>Shop Name:</Text>{' '}
+                  Moyer Doya Super Shop
+                </Text>
 
-              <View style={{  alignItems: 'center', marginLeft:1, }}>
-                  <View
-                    style={{
-                      width: 115,
-                      height: 80,
-                      borderRadius: 10,
-                      backgroundColor: '#FF5F1F',
-                      elevation: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginLeft:15,
-                      fontWeight:'Bold',
-                      color:'white'
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faMoneyBill1} size={30} color="white" />
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 15, color: 'white' }}>Orders Amount</Text>
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 20, color: 'white' }}>20</Text>
-                  </View>
-               
+                <Text>
+                  <Text className="font-extrabold text-base">Date:</Text>{' '}
+                  13.12.2023
+                </Text>
+                <Text>
+                  <Text className="font-extrabold text-base">Address: </Text>
+                Dhaka, Bangladesh
+                </Text>
               </View>
+          </View>
+          <View className="bg-white  m-1 flex flex-row" style={{elevation:0}}>
+            <View className="w-[100%]  m-2" style={{elevation:0}}>
+                <Text>
+                  <Text className="font-extrabold text-base" style={{elevation:0}}>Shop Name:</Text>{' '}
+                  Moyer Doya Super Shop
+                </Text>
 
-              <View style={{  alignItems: 'center', marginLeft:1, }}>
-                  <View
-                    style={{
-                      width: 117,
-                      height: 80,
-                      borderRadius: 10,
-                      backgroundColor: '#FF7F50',
-                      elevation: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginLeft:15,
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faShop} size={30} color="white" />
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 15, color: 'white' }}>Total Shop</Text>
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 20, color: 'yellow' }}>20</Text>
-                  </View>
-                 
+                <Text>
+                  <Text className="font-extrabold text-base">Date:</Text>{' '}
+                  13.12.2023
+                </Text>
+                <Text>
+                  <Text className="font-extrabold text-base">Address: </Text>
+                Dhaka, Bangladesh
+                </Text>
               </View>
-
-
-          </View>      
-          <View className="flex flex-row flex-wrap " style={{marginTop:20,}} >
-            <View style={{  alignItems: 'center', marginLeft:10, }}>
-                  <View
-                    style={{
-                      width: 117,
-                      height: 80,
-                      borderRadius: 10,
-                      backgroundColor: '#0096FF',
-                      elevation: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faMoneyBill1} size={30} color="white" />
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 15, color: 'white' }}>Orders Amount</Text>
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 20, color: 'yellow' }}>20</Text>
-                  </View>
-                 
-              </View>
-
-
-              <View style={{  alignItems: 'center', marginLeft:1, }}>
-                  <View
-                    style={{
-                      width: 117,
-                      height: 80,
-                      borderRadius: 10,
-                      backgroundColor: '#4169E1',
-                      elevation: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginLeft:15,
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faShop} size={30} color="white" />
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 15, color: 'white' }}>Total Shop</Text>
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 20, color: 'yellow' }}>20</Text>
-                  </View>
-                 
-              </View>
-
-              <View style={{  alignItems: 'center', marginLeft:10, }}>
-                  <View
-                    style={{
-                      width: 115,
-                      height: 80,
-                      borderRadius: 10,
-                      backgroundColor: '#0F52BA',
-                      elevation: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faNewspaper} size={25} color="white" />
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 15, color: 'white' }}>Today's Orders</Text>
-                    <Text style={{ fontFamily: 'Roboto', fontSize: 20, color: 'yellow' }}>10</Text>
-                  </View>
-               
-              </View>
-
-
-          </View>  
+          </View>
           
         </View>
       </View>
