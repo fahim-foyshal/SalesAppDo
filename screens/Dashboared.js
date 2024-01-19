@@ -161,7 +161,7 @@ const Dashboared = () => {
       ) : (
         <Text>No user data found</Text>
       )} */}
-        <View className="bg-white h-[250px] w-[] p-3" style={{backgroundColor:"#318CE7"}}>
+        <View className="bg-white h-[250px] w-[] p-3" style={{backgroundColor:"rgb(8 145 178)"}}>
           <View className="fixed flex flex-row items-center left-4"
             style={{elevation: 10}}>
             <TouchableOpacity
@@ -478,7 +478,7 @@ const Dashboared = () => {
                       width: 115,
                       height: 80,
                       borderRadius: 10,
-                      backgroundColor: '#0F52BA',
+                      backgroundColor: 'rgb(8 145 178)',
                       elevation: 10,
                       justifyContent: 'center',
                       alignItems: 'center',

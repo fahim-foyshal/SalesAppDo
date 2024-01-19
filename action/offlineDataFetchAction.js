@@ -163,7 +163,7 @@ function fetchandUpload2(data){
           'UPDATE do_master SET do_no=?, upload_status = ? WHERE do_no = ?',
           [response.data.do_no, 1, item.id],
           (_, results) => {
-            console.log('Upload status updated to 1 for id:', item.id, response.data.do_no);
+            console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxx:', item.id, response.data.do_no);
           },
           (error) => {
             console.error('Error updating upload status:', error);
@@ -183,6 +183,7 @@ function fetchandUpload2(data){
               console.log(dodetailsitems);
             
               data2.push({
+                previous_do:dodetailsitems.do_no,
                 do_no: response.data.do_no,
                 do_date: dodetailsitems.do_date,
                 item_id:dodetailsitems.item_id,
@@ -272,7 +273,7 @@ function fetchAndUploadDoDetailsData2(data){
         db.transaction((tx) => {  // Update upload status in the same transaction
         tx.executeSql(
           'UPDATE item_add_info SET do_no = ?,do_synced = ?, upload_status = ? WHERE do_no = ?',
-          [item.do_no,1,1, item.do_no],
+          [item.do_no,1,1, item.previous_do],
           (_, results) => {
             console.log('Upload status updated to 1 for id:fggggggggggiiiiiiiiiii');
           },

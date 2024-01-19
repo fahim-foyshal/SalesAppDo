@@ -3,9 +3,7 @@ import { useEffect,useState } from 'react';
 import { Provider } from 'react-redux';
 import store from './store/configure';
 import App from './App';
-import GetLocation from 'react-native-get-location'
 import Geolocation from '@react-native-community/geolocation';
-import BackgroundFetch from "react-native-background-fetch";
 import {name as appName} from './app.json';
 const ReduxApp = () => (
 

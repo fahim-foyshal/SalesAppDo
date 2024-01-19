@@ -133,7 +133,7 @@ const Home = ({navigation}) => {
       <Drawer.Screen name="Monthly Attendance" component={MonthlyAttendance}
        options={{
         headerStyle: {
-          backgroundColor: '#318CE7',
+          backgroundColor: 'rgb(8 145 178)',
         },
         headerTintColor: 'white',
       }}   />

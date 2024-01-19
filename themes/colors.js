@@ -11,7 +11,7 @@
 //   };
 export const color ={
     default:{
-    backgroundColor:'transparent',
+    backgroundColor:'rgb(8 145 178)',
     statusBarColor:'green',
   },
   theme1:{
